@@ -41,7 +41,8 @@ def autoClean():
 
 def main():
   if action in ('-m', '-d'):
-    autoClean()
+    if os.path.isdir(dir_path):
+      autoClean()
   else:
     print 'Invalid params %s' % action
     Usage()
