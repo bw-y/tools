@@ -40,7 +40,7 @@ def timeFetch(t):
     if len(s) in [3,4,5] and '-' in s:
       p = s.split('-')
       if int(p[0]) < int(p[1]):
-        for t in range(int(p[0]),int(p[1])):
+        for t in range(int(p[0]),int(p[1]) + 1):
           if len(str(t)) == 1:
             t = '0' + str(t)
             res.append(str(t))
