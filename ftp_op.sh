@@ -16,12 +16,16 @@ pidCheck(){
 # 调用lftp操作
 ftpOp(){
   lftp << EOF
+set net:timeout $ftp_timeout
+set net:max-retries 2
+set net:reconnect-interval-base 5
+set net:reconnect-interval-multiplier 1
 open $ftp_type://$ftp_user:$ftp_pass@$ftp_host
 $*
 EOF
 }
 
-
+ftp_timeout=5
 ftp_type='sftp'
 ftp_user='username'
 ftp_pass='password'
