@@ -19,7 +19,7 @@ main(){
     ceph_status=$(ceph health detail)
     now_weight="$(ceph osd tree|grep ${task_osd}|awk '{printf("%.5f\n",$2)}')"
     now_weight=$(set_zero ${now_weight})
-    [[ ${dest_weight} == ${now_weight} ]] && break || echo "$(date '+%Y-%m-%d/%H:%M:%S') $task_osd $now_weight => $dest_weight"
+    test ${now_weight:0:1} -ge ${dest_weight:0:1} && break || echo "$(date '+%Y-%m-%d/%H:%M:%S') $task_osd $now_weight => $dest_weight"
     if [[ ${ceph_status} == 'HEALTH_OK' ]];then
       weight=$(echo $now_weight $increment|awk '{printf("%.5f\n",$1+$2)}')
       ceph osd crush reweight $task_osd $weight &> /dev/null 
@@ -28,10 +28,9 @@ main(){
   done
 }
 
-# osd name
+
+
 task_osd=${1:-osd.12}
-# 增量权重步长
 increment=${2:-0.00500}
-# 目标权重
 dest_weight=${3:-3.00000}
 main
