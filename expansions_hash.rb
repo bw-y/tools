@@ -45,7 +45,7 @@ def expansions_hash(a)
   each_size_by_new_array << new_title.size if new_title.size > 1
   each_size_by_new_array << new_alias.size if new_alias.size > 1
   latest_size = each_size_by_new_array.min - 1
-  (0 .. latest_size).each { |c|
+  (0..latest_size).each { |c|
     res << { 'ip' => new_ip[c], 'title' => new_title[c], 'host_aliases' => new_alias[c] }
   }
 
